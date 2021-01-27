@@ -5,6 +5,7 @@ const app = express();
 require("dotenv").config();
 
 // requires routes
+const homeRouter = require("./routes/welcome");
 const customerRouter = require("./routes/customers");
 
 // middleware
@@ -12,11 +13,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(logger("dev"));
 
-app.get("/", (req, res) => {
-  res.json({ message: "welcome to the application" });
-});
-
 // Using routes
+app.use("/", homeRouter);
 app.use("/", customerRouter);
 
 const port = 3000;
