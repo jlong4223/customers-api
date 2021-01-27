@@ -34,4 +34,23 @@ Customer.getAll = (result) => {
   });
 };
 
+Customer.findById = (id, result) => {
+  sql.query(`SELECT * FROM customers WHERE id = ${id}`, (err, res) => {
+    if (err) {
+      console.log("error: " + err);
+      result(err, null);
+      return;
+    }
+
+    if (res.length) {
+      console.log("Found customer: ", res[0]);
+      result(null, res[0]);
+      return;
+    }
+
+    // if not found
+    result({ kind: "not_found" }, null);
+  });
+};
+
 module.exports = Customer;
