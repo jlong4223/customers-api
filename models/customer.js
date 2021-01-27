@@ -1,3 +1,4 @@
+const e = require("express");
 const sql = require("./db.js");
 
 // constructor (export to make sure this works)
@@ -18,6 +19,18 @@ Customer.create = (newCustomer, result) => {
 
     console.log("created customer: ", { id: res.insertId, ...newCustomer });
     result(null, { id: res.insertId, ...newCustomer });
+  });
+};
+
+Customer.getAll = (result) => {
+  sql.query("SELECT * FROM customers", (err, res) => {
+    if (err) {
+      console.log(err);
+      result(null, err);
+    } else {
+      console.log("customers: ", res);
+      result(null, res);
+    }
   });
 };
 

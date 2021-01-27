@@ -26,3 +26,13 @@ exports.create = (req, res) => {
     else res.send(data);
   });
 };
+
+exports.getAll = (req, res) => {
+  Customer.getAll((err, data) => {
+    if (err) {
+      res.status(500).send({
+        message: err.message || "there was an error somewhere",
+      });
+    } else res.send(data);
+  });
+};
