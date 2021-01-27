@@ -16,7 +16,7 @@ app.get("/", (req, res) => {
   res.json({ message: "welcome to the application" });
 });
 
-// requiring and using routes
+// Using routes
 app.use("/", customerRouter);
 
 const port = 3000;
