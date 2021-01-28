@@ -53,4 +53,27 @@ Customer.findById = (id, result) => {
   });
 };
 
+Customer.updateUsingId = (id, customer, result) => {
+  sql.query(
+    "UPDATE customers SET email = ?, name=?, active=? WHERE id=?",
+    [customer.email, customer.name, customer.active, id],
+    (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(null, err);
+        return;
+      }
+
+      if (res.affectedRows == 0) {
+        // no customer found
+        result({ kind: "not_found" }, null);
+        return;
+      }
+      //  spreading out the customer instead of typing everything out
+      console.log("updated customer: ", { id: id, ...customer });
+      result(null, { id: id, ...customer });
+    }
+  );
+};
+
 module.exports = Customer;
