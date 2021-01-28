@@ -76,4 +76,21 @@ Customer.updateUsingId = (id, customer, result) => {
   );
 };
 
+Customer.deleteById = (id, result) => {
+  sql.query("DELETE FROM customers WHERE id = ?", [id], (err, res) => {
+    if (err) {
+      console.log("error: ", error);
+      result(null, err);
+      return;
+    }
+
+    if (res.affectedRows == 0) {
+      result({ kind: "not_found" }, null);
+      return;
+    }
+    console.log("deleted the customer with the id: ", id);
+    result(null, res);
+  });
+};
+
 module.exports = Customer;

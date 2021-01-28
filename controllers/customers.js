@@ -74,4 +74,22 @@ exports.updateOne = (req, res) => {
     } else res.send(data);
   });
 };
-// updateOne, deleteOne, deleteAll
+
+exports.deleteById = (req, res) => {
+  // the below delete by id is coming form the model
+  Customer.deleteById(req.params.id, (err, data) => {
+    if (err) {
+      if (err.kind === "not_found") {
+        res.status(400).send({
+          message: `Customer with id: ${req.params.id} not found`,
+        });
+      } else {
+        res.status(500).send({
+          message: "Could not delete customer with id: " + req.params.id,
+        });
+      }
+    } else
+      res.send({ message: `Customer with id: ${req.params.id} was deleted` });
+  });
+};
+//  deleteAll
