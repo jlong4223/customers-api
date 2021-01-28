@@ -92,4 +92,14 @@ exports.deleteById = (req, res) => {
       res.send({ message: `Customer with id: ${req.params.id} was deleted` });
   });
 };
-//  deleteAll
+
+exports.deleteAll = (req, res) => {
+  Customer.removeAll((err, data) => {
+    if (err)
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while removing all customers.",
+      });
+    else res.send({ message: `All Customers were deleted successfully!` });
+  });
+};
